@@ -6,9 +6,14 @@ const Router = require('koa-router');
 
 const router = new Router();
 
-router.get('/test', (ctx, next) => {
+router.get('/test', async (ctx, next) => {
   const a = ctx.query;
-  console.log(a.a)
+  ctx.status = 200;
+  ctx.set('Content-Type', 'application/json');
+  ctx.body = {
+    a: 1,
+    b: 2
+  }
 });
 
 app
