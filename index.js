@@ -18,7 +18,7 @@ router.get('/test', async (ctx, next) => {
 });
 
 app
-  .use(cors({'Access-Control-Allow-Origin': '*'}))
+  .use(cors({origin: '*'}))
   .use(router.routes())
   .use(router.allowedMethods());
 
