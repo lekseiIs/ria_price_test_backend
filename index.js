@@ -1,6 +1,7 @@
 const Koa = require('koa');
 const app = new Koa();
 const Router = require('koa-router');
+const cors = require('@koa/cors');
 
 
 
@@ -17,6 +18,7 @@ router.get('/test', async (ctx, next) => {
 });
 
 app
+  .use(cors({'Access-Control-Allow-Origin': '*'}))
   .use(router.routes())
   .use(router.allowedMethods());
 
