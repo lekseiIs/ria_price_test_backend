@@ -3,7 +3,10 @@
     "@koa/cors": "^3.2.0",
     "@koa/router": "^10.1.1",
     "koa": "^2.13.4",
-    "koa-router": "^10.1.1"
+    "koa-better-body": "^3.3.9",
+    "koa-body": "^4.2.0",
+    "koa-router": "^10.1.1",
+    "node-fetch": "^2.6.7"
   },
   "devDependencies": {
     "nodemon": "^2.0.15"
