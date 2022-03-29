@@ -7,6 +7,7 @@ const fetch = require('node-fetch');
 const { urlGenerator } = require('./helpers/index');
 
 const router = new Router();
+const { ShowPrice } = require('./helpers/db_connect');
 
 
 app
@@ -14,11 +15,13 @@ app
   .use(cors({ origin: '*' }))
   .use(router.routes())
   .use(router.allowedMethods());
+
 router.post('/avg-price', async (ctx) => {
   await fetch(urlGenerator(ctx.request.body))
         .then((data) => data.json())
         .then((result) => ctx.body = result)
         .catch((e) => ctx.body = { error: e });
 });
+router.get('/data', ShowPrice);
 
 app.listen(3000);
