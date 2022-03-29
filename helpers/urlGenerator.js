@@ -1,5 +1,10 @@
-module.exports = (apiKey, body) => {
-  const url = 'https://developers.ria.com/auto/average_price';
+module.exports = (body) => {
+
+  require('dotenv').config();
+
+const apiKey = process.env.API_KEY
+
+  const url = 'https://developers.ria.com/auto/average_price?api_key=';
 
     const params = Object.entries(body).map((param) => {
       if (typeof param[1] === "string") {
@@ -10,5 +15,5 @@ module.exports = (apiKey, body) => {
         return values.map((param) => key + "=" + param).join("&");
       }
     }).join("&");
-    return url + apiKey + params;
+    return url + apiKey + "&" + params;
 };
