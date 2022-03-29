@@ -16,9 +16,7 @@ app
   .use(cors({ origin: '*' }))
   .use(router.routes())
   .use(router.allowedMethods());
-
 router.post('/avg-price', async (ctx) => {
-
   await fetch(urlGenerator(ctx.apiKey, ctx.request.body))
         .then((data) => data.json())
         .then((result) => ctx.body = result)
