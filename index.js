@@ -16,6 +16,7 @@ app
   .use(router.allowedMethods());
 
 router.post('/avg-price', async (ctx) => {
+  console.log(process.env)
   try {
     const dbRequest = await (await db(ctx)).reduce(
       (acc, curr) => {
