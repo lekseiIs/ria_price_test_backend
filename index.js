@@ -5,7 +5,8 @@ const Router = require('koa-router');
 const cors = require('@koa/cors');
 const bodyParser = require('koa-body');
 const fetch = require('node-fetch');
-const { urlGenerator, db, months } = require('./helpers/index');
+const { db } = require('./helpers/index');
+const { urlGenerator, months, sqlParams } = require('./utils/index');
 
 const router = new Router();
 
@@ -16,9 +17,8 @@ app
   .use(router.allowedMethods());
 
 router.post('/avg-price', async (ctx) => {
-  console.log(process.env)
   try {
-    const dbRequest = await (await db(ctx)).reduce(
+    const dbRequest = await (await db(sqlParams(ctx.request.body))).reduce(
       (acc, curr) => {
         acc.labels.push(months[curr.month] + `(${curr.year})`);
         acc.nums.push(Number(curr.avg).toFixed());
