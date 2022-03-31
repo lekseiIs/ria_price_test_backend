@@ -6,7 +6,7 @@ const cors = require('@koa/cors');
 const bodyParser = require('koa-body');
 const fetch = require('node-fetch');
 const { db } = require('./helpers/index');
-const { urlGenerator, months, sqlParams } = require('./utils/index');
+const { urlGenerator, months, sqlParams, rec } = require('./utils/index');
 
 const router = new Router();
 
@@ -18,7 +18,10 @@ app
 
 router.post('/avg-price', async (ctx) => {
   try {
-    const dbRequest = await (await db(sqlParams(ctx.request.body))).reduce(
+    const select = sqlParams(ctx.request.body)
+    const data = await rec(select)
+
+    const dbRequest = data.reduce(
       (acc, curr) => {
         acc.labels.push(months[curr.month] + `(${curr.year})`);
         acc.nums.push(Number(curr.avg).toFixed());
@@ -26,9 +29,13 @@ router.post('/avg-price', async (ctx) => {
       },
       { labels: [], nums: [] }
     );
-    const apiRequest = await (await fetch(urlGenerator(ctx.request.body))).json();
 
-    ctx.body = { apiRequest, dbRequest };
+      await fetch(urlGenerator(ctx.request.body))
+      .then((data) => data.json())
+      .then((apiRequest) => {
+        ctx.body = { apiRequest, dbRequest };
+      })
+
   } catch (error) {
     console.log(error);
   }
