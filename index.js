@@ -5,8 +5,8 @@ const Router = require('koa-router');
 const cors = require('@koa/cors');
 const bodyParser = require('koa-body');
 const fetch = require('node-fetch');
-const { db } = require('./helpers/index');
-const { urlGenerator, months, sqlParams } = require('./utils/index');
+const { db, filterData } = require('./helpers/index');
+const { urlGenerator, months, sqlParams, selectsForm } = require('./utils/index');
 
 const router = new Router();
 
@@ -29,6 +29,17 @@ router.post('/avg-price', async (ctx) => {
     const apiRequest = await (await fetch(urlGenerator(ctx.request.body))).json();
 
     ctx.body = { apiRequest, dbRequest };
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+router.get('/selects-form', async (ctx) => {
+  try {
+    await selectsForm().then(data => {
+      const filter = filterData(data)
+      ctx.body = {message: "ok", data: filter}
+    })
   } catch (error) {
     console.log(error);
   }
