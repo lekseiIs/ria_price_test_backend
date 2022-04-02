@@ -5,8 +5,8 @@ const Router = require('koa-router');
 const cors = require('@koa/cors');
 const bodyParser = require('koa-body');
 const fetch = require('node-fetch');
-const { db } = require('./helpers/index');
-const { urlGenerator, months, sqlParams, rec } = require('./utils/index');
+const { urlGenerator, months, sqlGenerator } = require('./utils/index');
+const { selectAvgData } = require('./database/dbMethods');
 
 const router = new Router();
 
@@ -18,8 +18,8 @@ app
 
 router.post('/avg-price', async (ctx) => {
   try {
-    const select = sqlParams(ctx.request.body)
-    const data = await rec(select)
+    const selectQuery = sqlGenerator(ctx.request.body)
+    const data = await selectAvgData(selectQuery)
 
     const dbRequest = data.reduce(
       (acc, curr) => {
