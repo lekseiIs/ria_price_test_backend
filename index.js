@@ -5,7 +5,7 @@ const Router = require('koa-router');
 const cors = require('@koa/cors');
 const bodyParser = require('koa-body');
 const fetch = require('node-fetch');
-const { db, grupsData } = require('./helpers/index');
+const { db, grupsData } = require('./database/index');
 const { urlGenerator, months, sqlGenerator, selectsForm, selectsModels  } = require('./utils/index');
 const { selectAvgData } = require('./database/dbMethods');
 
