@@ -5,8 +5,8 @@ const Router = require('koa-router');
 const cors = require('@koa/cors');
 const bodyParser = require('koa-body');
 const fetch = require('node-fetch');
-const { db, filterData } = require('./helpers/index');
-const { urlGenerator, months, sqlParams, selectsForm } = require('./utils/index');
+const { db, grupsData } = require('./helpers/index');
+const { urlGenerator, months, sqlParams, selectsForm, selectsModels } = require('./utils/index');
 
 const router = new Router();
 
@@ -37,8 +37,19 @@ router.post('/avg-price', async (ctx) => {
 router.get('/selects-form', async (ctx) => {
   try {
     await selectsForm().then(data => {
-      const filter = filterData(data)
-      ctx.body = {message: "ok", data: filter}
+      const grupsObj = grupsData(data)
+      ctx.body = {message: "ok", data: grupsObj}
+    })
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+router.get('/get-models/:markaId', async (ctx) => {
+  const markaId = ctx.params.markaId
+  try {
+    await selectsModels(markaId).then(data => {
+      ctx.body = {message: "ok", data}
     })
   } catch (error) {
     console.log(error);

@@ -1,7 +1,7 @@
 const db = require('./connectDb');
-const filterData = require('./filterData')
+const grupsData = require('./groupingData')
 
 module.exports = {
   db,
-  filterData,
+  grupsData,
 };
