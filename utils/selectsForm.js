@@ -29,4 +29,14 @@ module.exports = {
             return response.json();
         })
     },
+
+    getById: async (autoId) => {
+        const url = `https://developers.ria.com/auto/info?api_key=${api_key}&auto_id=${autoId}`
+
+        return await fetch(url)
+        .then((response) => {
+            return response.json();
+        })
+    },
+
 }
