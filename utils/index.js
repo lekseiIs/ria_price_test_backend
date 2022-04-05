@@ -1,6 +1,6 @@
 const urlGenerator = require('./urlGenerator');
 const months = require('./monthName');
-const { selectsForm, selectsModels } = require('./selectsForm')
+const { selectsForm, selectsModels, getById } = require('./selectsForm')
 const sqlGenerator = require('./sqlGenerator');
 
 module.exports = {
@@ -9,4 +9,5 @@ module.exports = {
   months,
   selectsForm,
   selectsModels,
+  getById,
 };

@@ -6,7 +6,7 @@ const cors = require('@koa/cors');
 const bodyParser = require('koa-body');
 const fetch = require('node-fetch');
 const { db, grupsData } = require('./database/index');
-const { urlGenerator, months, sqlGenerator, selectsForm, selectsModels  } = require('./utils/index');
+const { urlGenerator, months, sqlGenerator, selectsForm, selectsModels, getById } = require('./utils/index');
 const { selectAvgData } = require('./database/dbMethods');
 
 const router = new Router();
@@ -34,7 +34,7 @@ router.post('/avg-price', async (ctx) => {
       await fetch(urlGenerator(ctx.request.body))
       .then((data) => data.json())
       .then((apiRequest) => {
-        ctx.body = { apiRequest, dbRequest };
+        ctx.body = { message: "ok", apiRequest, dbRequest };
       })
 
   } catch (error) {
@@ -58,6 +58,56 @@ router.get('/get-models/:markaId', async (ctx) => {
   try {
     await selectsModels(markaId).then(data => {
       ctx.body = {message: "ok", data}
+    })
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+router.get('/ad/info', async (ctx) => {
+  // const autoId = ctx.params.id
+  const { id: autoId } = ctx.query;
+  // console.log(id);
+
+  try {
+    await getById(autoId).then(result => {
+      const {
+        photoData: { seoLinkM },
+        USD,
+        markName,
+        modelName,
+        markId,
+        modelId,
+        autoInfoBar: { damage },
+        stateData: { stateId },
+        autoData: {
+          year,
+          bodyId,
+          raceInt,
+          fuelId,
+          gearBoxId,
+          categoryId,
+          custom
+        }
+      } = result
+
+      ctx.body = {message: "ok", data: {
+        body_id: bodyId,
+        marka_id: markId,
+        model_id: modelId,
+        yers: year,
+        state_id: stateId,
+        damage,
+        custom,
+        gear_id: gearBoxId,
+        fuel_id: fuelId,
+        photo: seoLinkM,
+        markName,
+        modelName,
+        USD,
+        raceInt,
+        categoryId
+      }}
     })
   } catch (error) {
     console.log(error);
