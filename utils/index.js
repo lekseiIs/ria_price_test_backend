@@ -2,6 +2,7 @@ const urlGenerator = require('./urlGenerator');
 const months = require('./monthName');
 const { selectsForm, selectsModels, getById } = require('./selectsForm')
 const sqlGenerator = require('./sqlGenerator');
+const getDbData = require('./dbRequest')
 
 module.exports = {
   urlGenerator, 
@@ -10,4 +11,5 @@ module.exports = {
   selectsForm,
   selectsModels,
   getById,
+  getDbData
 };
