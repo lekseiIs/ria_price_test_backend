@@ -31,6 +31,11 @@ router.post('/avg-price', async (ctx) => {
       { labels: [], nums: [] }
     );
 
+    if(dbRequest.labels.length === 0){
+      throw new Error({mes: "Invalid velue"})
+    }
+
+
       await fetch(urlGenerator(ctx.request.body))
       .then((data) => data.json())
       .then((apiRequest) => {
@@ -38,7 +43,7 @@ router.post('/avg-price', async (ctx) => {
       })
 
   } catch (error) {
-    console.log(error);
+    ctx.body = {message: "error", data: {}}
   }
 });
 
@@ -107,17 +112,18 @@ router.get('/get-models/:markaId', async (ctx) => {
   const markaId = ctx.params.markaId
   try {
     await getModels(markaId).then(data => {
+      if(data.length === 0) {
+        throw new Error
+      }
       ctx.body = {message: "ok", data}
     })
   } catch (error) {
-    console.log(error);
+    ctx.body = {message: "error", data: {}}
   }
 });
 
 router.get('/ad/info', async (ctx) => {
-  // const autoId = ctx.params.id
   const { id: autoId } = ctx.query;
-  // console.log(id);
 
   try {
     await getById(autoId).then(result => {
@@ -162,8 +168,12 @@ router.get('/ad/info', async (ctx) => {
       }}
     })
   } catch (error) {
+<<<<<<< HEAD
     console.log(error);
     // ctx.body = { message: "ok", data: {}}
+=======
+    ctx.body = {message: "error", data: {}}
+>>>>>>> 9ebf3ef0f9886cd620afa8b5634ddd0a94c88920
   }
 });
 
