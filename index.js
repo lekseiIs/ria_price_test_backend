@@ -111,6 +111,7 @@ router.get('/ad/info', async (ctx) => {
     })
   } catch (error) {
     console.log(error);
+    // ctx.body = { message: "ok", data: {}}
   }
 });
 
