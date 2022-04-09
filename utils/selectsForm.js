@@ -78,6 +78,7 @@ module.exports = {
         .then((response) => {
             return response.json();
         })
+        .catch((error) => console.log(error))
     },
 
     getById: async (autoId) => {
@@ -87,6 +88,7 @@ module.exports = {
         .then((response) => {
             return response.json();
         })
+        .catch((error) => console.log(error))
     },
 
 }
