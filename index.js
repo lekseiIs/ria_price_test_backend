@@ -6,7 +6,7 @@ const cors = require('@koa/cors');
 const bodyParser = require('koa-body');
 const fetch = require('node-fetch');
 const { db, grupsData } = require('./database/index');
-const { urlGenerator, months, sqlGenerator, selectsForm, selectsModels, getById } = require('./utils/index');
+const { urlGenerator, months, sqlGenerator, getMarks, getRegions, getGearboxes, getFuelType, getBodyType,  getModels, getById } = require('./utils/index');
 const { selectAvgData } = require('./database/dbMethods');
 
 const router = new Router();
@@ -42,21 +42,71 @@ router.post('/avg-price', async (ctx) => {
   }
 });
 
-router.get('/selects-form', async (ctx) => {
+router.get('/get-marks', async (ctx) => {
   try {
-    await selectsForm().then(data => {
-      const grupsObj = grupsData(data)
-      ctx.body = {message: "ok", data: grupsObj}
+    await getMarks().then(data => {
+      ctx.body = {message: "ok", data}
     })
   } catch (error) {
     console.log(error);
   }
 });
 
+router.get('/get-regions', async (ctx) => {
+  try {
+    await getRegions().then(data => {
+      ctx.body = {message: "ok", data}
+    })
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+router.get('/get-gearboxes', async (ctx) => {
+  try {
+    await getGearboxes().then(data => {
+      ctx.body = {message: "ok", data}
+    })
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+router.get('/get-fuel-type', async (ctx) => {
+  try {
+    await getFuelType().then(data => {
+      ctx.body = {message: "ok", data}
+    })
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+router.get('/get-body-type', async (ctx) => {
+  try {
+    await getBodyType().then(data => {
+      ctx.body = {message: "ok", data}
+    })
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+// router.get('/selects-form', async (ctx) => {
+//   try {
+//     await selectsForm().then(data => {
+//       const grupsObj = grupsData(data)
+//       ctx.body = {message: "ok", data: grupsObj}
+//     })
+//   } catch (error) {
+//     console.log(error);
+//   }
+// });
+
 router.get('/get-models/:markaId', async (ctx) => {
   const markaId = ctx.params.markaId
   try {
-    await selectsModels(markaId).then(data => {
+    await getModels(markaId).then(data => {
       ctx.body = {message: "ok", data}
     })
   } catch (error) {
@@ -81,6 +131,7 @@ router.get('/ad/info', async (ctx) => {
         autoInfoBar: { damage },
         stateData: { stateId },
         autoData: {
+          autoId,
           year,
           bodyId,
           raceInt,
@@ -92,6 +143,7 @@ router.get('/ad/info', async (ctx) => {
       } = result
 
       ctx.body = {message: "ok", data: {
+        autoId,
         body_id: bodyId,
         marka_id: markId,
         model_id: modelId,
