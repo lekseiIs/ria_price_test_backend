@@ -53,7 +53,7 @@ router.get('/get-marks', async (ctx) => {
       ctx.body = {message: "ok", data}
     })
   } catch (error) {
-    console.log(error);
+    ctx.body = {message: "ok", data: []};
   }
 });
 
@@ -63,7 +63,7 @@ router.get('/get-regions', async (ctx) => {
       ctx.body = {message: "ok", data}
     })
   } catch (error) {
-    console.log(error);
+    ctx.body = {message: "ok", data: []};
   }
 });
 
@@ -73,7 +73,7 @@ router.get('/get-gearboxes', async (ctx) => {
       ctx.body = {message: "ok", data}
     })
   } catch (error) {
-    console.log(error);
+    ctx.body = {message: "ok", data: []};
   }
 });
 
@@ -83,7 +83,7 @@ router.get('/get-fuel-type', async (ctx) => {
       ctx.body = {message: "ok", data}
     })
   } catch (error) {
-    console.log(error);
+    ctx.body = {message: "ok", data: []};
   }
 });
 
@@ -93,7 +93,7 @@ router.get('/get-body-type', async (ctx) => {
       ctx.body = {message: "ok", data}
     })
   } catch (error) {
-    console.log(error);
+    ctx.body = {message: "ok", data: []};
   }
 });
 
