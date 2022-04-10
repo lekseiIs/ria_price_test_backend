@@ -163,7 +163,8 @@ router.get('/ad/info', async (ctx) => {
         markName,
         modelName,
         USD,
-        raceInt,
+        raceFrom: "5",
+        raeeTo: "1000",
         categoryId
       }}
     })
