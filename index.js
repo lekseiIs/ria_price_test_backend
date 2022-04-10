@@ -31,9 +31,9 @@ router.post('/avg-price', async (ctx) => {
       { labels: [], nums: [] }
     );
 
-    if(dbRequest.labels.length === 0){
-      throw new Error({mes: "Invalid velue"})
-    }
+    // if(dbRequest.labels.length === 0){
+      // throw new Error({message: "Invalid value"})
+    // }
 
 
       await fetch(urlGenerator(ctx.request.body))
@@ -168,12 +168,7 @@ router.get('/ad/info', async (ctx) => {
       }}
     })
   } catch (error) {
-<<<<<<< HEAD
-    console.log(error);
-    // ctx.body = { message: "ok", data: {}}
-=======
     ctx.body = {message: "error", data: {}}
->>>>>>> 9ebf3ef0f9886cd620afa8b5634ddd0a94c88920
   }
 });
 

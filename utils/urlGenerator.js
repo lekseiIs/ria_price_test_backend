@@ -13,5 +13,6 @@ module.exports = (body) => {
       }
     })
     .join('&');
+  console.log(url + apiKey + '&' + params)
   return url + apiKey + '&' + params;
 };
